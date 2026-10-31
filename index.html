@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>drAGhts — chaotic checkers</title>
+  <link rel="stylesheet" href="/styles/draghts.css">
+  <link rel="stylesheet" href="/styles/reduced-motion.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>drAGhts</h1>
+      <p>Chaotic checkers. House rules, brutal and bright.</p>
+    </header>
+
+    <div id="start-screen-container"></div>
+    <div id="hud-container"></div>
+    <div id="game-area" style="display:none;">
+      <div id="turn-banner" aria-live="assertive" aria-atomic="true" class="turn-banner"></div>
+      <div id="picker-banner" aria-live="polite" class="picker-banner hidden"></div>
+      <div id="coin-flip-result" aria-live="polite" class="coin-flip-result"></div>
+      <div id="end-turn-wrapper" class="end-turn-wrapper hidden">
+        <button id="end-turn-btn" type="button">End Turn</button>
+      </div>
+      <div id="board" aria-label="Checkers board"></div>
+    </div>
+    <div id="end-screen-container" style="display:none;"></div>
+    <div id="dashboard-container" style="display:none;"></div>
+  </main>
+  <script type="module" src="/scripts/main.js"></script>
+</body>
+</html>

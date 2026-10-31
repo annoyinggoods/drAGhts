@@ -1,0 +1,16 @@
+@media (prefers-reduced-motion: reduce) {
+  .square.pulse {
+    outline: none !important;
+  }
+  .square.selected {
+    outline: 3px solid var(--pulse-purple);
+    outline-offset: -3px;
+  }
+}
+
+@media (max-width: 420px) {
+  .mute-btn, .end-turn-wrapper button, .end-actions button, .start-actions button {
+    min-height: 44px;
+    padding: 0.6rem 1rem;
+  }
+}
