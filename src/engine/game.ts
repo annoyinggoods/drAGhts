@@ -23,7 +23,8 @@ import { baseRules } from "./rules.js";
 import { captureMovesFor } from "./captures.js";
 import { movesForPlayer } from "./legalmoves.js";
 import { endByWipeout, endOfTurn, startTurn } from "./turn.js";
-export { endByWipeout, endByBlockage, endByTwentyRounds } from "./turn.js";
+import { markBuffMoved } from "./bonuses.js";
+export { endByWipeout, endByBlockage, endByTwentyRounds, startTurn } from "./turn.js";
 import { moveContextFor } from "./context.js";
 import { cloneFrenzy, emptyFrenzy } from "./frenzy.js";
 import { emptyRoundTurns, emptyScores, onePieceCondition, scoreRemoval } from "./scoring.js";
@@ -118,12 +119,13 @@ export function applyMove(state: GameState, move: Move): MoveResult {
     piece.id,
     chosen.kills.length,
   );
+  const buffed = markBuffMoved(advanced, piece.id);
   const landing: TurnLanding = {
     piece: placed,
     square: chosen.to,
     killed: chosen.kills.length > 0,
   };
-  return finishTurn(advanced, piece.player, landing, events);
+  return finishTurn(buffed, piece.player, landing, events);
 }
 
 export function endTurn(state: GameState): MoveResult {

@@ -97,10 +97,18 @@ export class HUD {
     const streakWhite = this.container.querySelector("#streak-white");
     const streakPurple = this.container.querySelector("#streak-purple");
     if (streakWhite) {
-      streakWhite.textContent = streakLabel(state.frenzy.white.streak, state.frenzy.white.armed, state.frenzyTurn);
+      streakWhite.textContent = streakLabel(
+        state.frenzy.white.streak,
+        state.frenzy.white.armed,
+        state.frenzyTurn && state.turn === "white",
+      );
     }
     if (streakPurple) {
-      streakPurple.textContent = streakLabel(state.frenzy.purple.streak, state.frenzy.purple.armed, state.frenzyTurn);
+      streakPurple.textContent = streakLabel(
+        state.frenzy.purple.streak,
+        state.frenzy.purple.armed,
+        state.frenzyTurn && state.turn === "purple",
+      );
     }
 
     this.updateTurnBanner(`${state.turn.toUpperCase()} to move`);

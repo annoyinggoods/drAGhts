@@ -82,7 +82,9 @@ function victimPoints(state: GameState, victim: Piece): number {
 }
 
 function carriesQueenBuff(state: GameState, victim: Piece): boolean {
-  return state.empowerment.activeBuffs.some((buff) => buff.pieceId === victim.id);
+  return state.empowerment.activeBuffs.some(
+    (buff) => buff.pieceId === victim.id && !buff.moved,
+  );
 }
 
 function diesInOpenFrenzy(state: GameState, victim: Piece): boolean {

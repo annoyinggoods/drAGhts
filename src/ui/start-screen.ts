@@ -1,5 +1,5 @@
 import { GameState, RulesConfig } from "../engine/types.js";
-import { createGame } from "../engine/game.js";
+import { createGame, startTurn } from "../engine/game.js";
 import { validateRules, rulesWith, baseRules } from "../engine/rules.js";
 import { addToast } from "./toasts.js";
 
@@ -266,7 +266,7 @@ export class StartScreen {
     const whiteFirst = Math.random() < 0.5;
     const initialTurn = (whiteFirst ? "white" : "purple") as "white" | "purple";
     const result = createGame(correctedRules);
-    const gameState: GameState = { ...result, turn: initialTurn };
+    const gameState: GameState = startTurn({ ...result, turn: initialTurn });
 
     const whitePlayer = isComputer ? "Human" : "White";
     const purplePlayer = isComputer ? "Computer" : "Purple";

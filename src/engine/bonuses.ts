@@ -33,6 +33,13 @@ export function expireQueenBuffs(empowerment: Empowerment, mover: Player, moveCo
 function armQueenBuff(state: GameState, owner: Player, pieceId: number): GameState {
   const armedTurn = state.moveCounter;
   const others = state.empowerment.activeBuffs.filter((buff) => buff.pieceId !== pieceId);
-  const activeBuffs: QueenBuff[] = [...others, { pieceId, armedTurn, owner }];
+  const activeBuffs: QueenBuff[] = [...others, { pieceId, armedTurn, owner, moved: false }];
+  return { ...state, empowerment: { ...state.empowerment, activeBuffs } };
+}
+
+export function markBuffMoved(state: GameState, pieceId: number): GameState {
+  const activeBuffs = state.empowerment.activeBuffs.map((buff) =>
+    buff.pieceId === pieceId ? { ...buff, moved: true } : buff,
+  );
   return { ...state, empowerment: { ...state.empowerment, activeBuffs } };
 }

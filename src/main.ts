@@ -5,6 +5,7 @@ import {
   deserializeState,
   endTurn,
   legalMoves,
+  startTurn,
   GameState,
 } from "./engine/game.js";
 import { chooseMove } from "./engine/ai/computer.js";
@@ -220,7 +221,7 @@ function startGameFromConfig(session: Session): void {
   const whiteFirst = Math.random() < 0.5;
   const turn: Player = whiteFirst ? "white" : "purple";
   const base = createGame(session.rules);
-  const state: GameState = { ...base, turn };
+  const state: GameState = startTurn({ ...base, turn });
   const colour: Player | null = session.isComputerGame
     ? (Math.random() < 0.5 ? "white" : "purple")
     : null;

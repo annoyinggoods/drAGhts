@@ -107,6 +107,7 @@ export interface QueenBuff {
   pieceId: number;
   armedTurn: number;
   owner: Player;
+  moved: boolean;
 }
 
 export interface Empowerment {

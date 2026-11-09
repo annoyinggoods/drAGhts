@@ -52,6 +52,7 @@ export class BoardUI {
 
   public init(): void {
     this.clearPulse();
+    syncSelection(this, this.stateData.state, this.stateData.state);
     this.render();
     this.updateBanner();
     this.updatePickerBanner();
@@ -228,18 +229,37 @@ function offenderOf(state: GameState): Player | null {
 }
 
 function syncSelection(board: BoardUI, prev: GameState, curr: GameState): void {
-  if (curr.pendingPunishment !== null && prev.pendingPunishment === null) {
+  if (curr.pendingPunishment !== null) {
+    if (prev.pendingPunishment === null) {
+      board.clearSelectionFields();
+      board.clearPulse();
+    }
+    board.stateData.pickerActive = true;
+  } else {
+    board.stateData.pickerActive = false;
+  }
+  if (curr.pendingChain !== null) {
+    selectChainPiece(board, curr);
+  } else if (prev.pendingChain !== null) {
     board.clearSelectionFields();
     board.clearPulse();
-    board.stateData.pickerActive = true;
-  } else if (curr.pendingPunishment === null && prev.pendingPunishment !== null) {
-    board.stateData.pickerActive = false;
   }
   if (curr.status === "ended") {
     board.clearSelectionFields();
     board.clearPulse();
     board.stateData.pickerActive = false;
   }
+}
+
+function selectChainPiece(board: BoardUI, curr: GameState): void {
+  const chain = curr.pendingChain;
+  if (chain === null) {
+    return;
+  }
+  board.stateData.selectedSquare = { ...chain.square };
+  board.stateData.selectedPieceId = chain.pieceId;
+  board.stateData.legalDestinations = legalMoves(curr).map((m) => ({ ...m.to }));
+  board.ensurePulse();
 }
 
 function renderInto(board: BoardUI): void {
@@ -422,6 +442,9 @@ function onPickerClick(board: BoardUI, square: Square): void {
 function onChainClick(board: BoardUI, square: Square): void {
   const chain = board.stateData.state.pendingChain;
   if (!chain) {
+    return;
+  }
+  if (chain.square.row === square.row && chain.square.column === square.column) {
     return;
   }
   const moves = legalMoves(board.stateData.state);
